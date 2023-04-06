@@ -69,10 +69,12 @@ spec:
   selector:
     matchLabels:
       app: spring-petclinic
+      name: postgresql
   template:
     metadata:
       labels:
         app: spring-petclinic
+        name: postgresql
     spec:
       containers:
       - name: postgresql
