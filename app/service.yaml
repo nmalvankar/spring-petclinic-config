@@ -22,13 +22,13 @@ spec:
     app: spring-petclinic
   sessionAffinity: None
   type: ClusterIP
-  ---
+---
 apiVersion: v1
 kind: Service
 metadata:
   annotations:
     description: Exposes the database server
-  name: gitea-postgresql
+  name: postgresql
 spec:
   ports:
   - name: postgresql
