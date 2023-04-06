@@ -23,7 +23,7 @@ spec:
       containers:
       - name: spring-petclinic
         imagePullPolicy: Always
-        image: quay.io/siamaksade/spring-petclinic:latest
+        image: quay.io/nmalvankar/spring-petclinic:latest
         livenessProbe:
           failureThreshold: 3
           httpGet:
@@ -83,17 +83,17 @@ spec:
         image: postgresql:12
         env:
         - name: POSTGRESQL_USER
-          value: gitea
+          value: petclinic
         - name: POSTGRESQL_PASSWORD
-          value: gitea
+          value: petclinic
         - name: POSTGRESQL_DATABASE
-          value: gitea
+          value: petclinic
         - name: POSTGRESQL_MAX_CONNECTIONS
           value: "100"
         - name: POSTGRESQL_SHARED_BUFFERS
           value: 12MB
         - name: POSTGRESQL_ADMIN_PASSWORD
-          value: gitea
+          value: petclinic
         ports:
         - containerPort: 5432
         livenessProbe:
