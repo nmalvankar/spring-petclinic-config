@@ -51,3 +51,72 @@ spec:
           periodSeconds: 10
           successThreshold: 1
           timeoutSeconds: 5
+          
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+  labels:
+    app: spring-petclinic
+    app.kubernetes.io/component: db
+    app.kubernetes.io/instance: spring-petclinic
+    app.kubernetes.io/name: postgresql
+    app.kubernetes.io/part-of: spring-petclinic
+  name: postgresql
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: spring-petclinic
+  template:
+    metadata:
+      labels:
+        app: spring-petclinic
+    spec:
+      containers:
+      - name: postgresql
+        imagePullPolicy: Always
+        image: registry.redhat.io/rhel8/postgresql-13:1-118
+        livenessProbe:
+          failureThreshold: 3
+          exec:
+            command:
+              - /usr/libexec/check-container
+              - '--live'
+          initialDelaySeconds: 120
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 10
+        env:
+          - name: POSTGRESQL_USER
+            valueFrom:
+              secretKeyRef:
+                name: postgresql
+                key: database-user
+          - name: POSTGRESQL_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: postgresql
+                key: database-password
+          - name: POSTGRESQL_DATABASE
+            valueFrom:
+              secretKeyRef:
+                name: postgresql
+                key: database-name  
+        ports:
+          - containerPort: 5432
+            protocol: TCP
+        imagePullPolicy: IfNotPresent
+        volumeMounts:
+          - name: postgresql-data
+            mountPath: /var/lib/pgsql/data
+        readinessProbe:
+          exec:
+            command:
+              - /usr/libexec/check-container
+          initialDelaySeconds: 5
+          timeoutSeconds: 1
+          periodSeconds: 10
+          successThreshold: 1
+          failureThreshold: 3
