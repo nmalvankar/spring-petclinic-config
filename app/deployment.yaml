@@ -77,7 +77,7 @@ spec:
       containers:
       - name: postgresql
         imagePullPolicy: Always
-        image: quay.io/nmalvankar/postgres:12
+        image: registry.redhat.io/rhel8/postgresql-12:latest
         env:
         - name: POSTGRESQL_USER
           value: petclinic
