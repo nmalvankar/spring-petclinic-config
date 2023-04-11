@@ -56,9 +56,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: postgresql
-  annotations:
-    image.openshift.io/triggers: >-
-        [{"from":{"kind":"ImageStreamTag","name":"postgresql:12", "namespace":"openshift"},"fieldPath":"spec.template.spec.containers[?(@.name==\"postgresql\")].image"}]
   labels:
     app: spring-petclinic
     app.kubernetes.io/component: database
@@ -80,7 +77,7 @@ spec:
       containers:
       - name: postgresql
         imagePullPolicy: Always
-        image: postgresql:12
+        image: quay.io/nmalvankar/postgres:12
         env:
         - name: POSTGRESQL_USER
           value: petclinic
