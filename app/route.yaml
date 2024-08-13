@@ -11,3 +11,7 @@ spec:
     kind: Service
     name: spring-petclinic
     weight: 100
+  tls:
+    termination: edge
+    insecureEdgeTerminationPolicy: Redirect
+  wildcardPolicy: None
